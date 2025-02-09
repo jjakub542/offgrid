@@ -49,4 +49,5 @@ sudo -u postgres psql
 
 Connect to offgrid_db as offgrid_admin:
 psql -h localhost -d offgrid_db -U offgrid_admin -p 5432
+
 Password for user offgrid_admin: offgrid123
