@@ -10,9 +10,10 @@ type User struct {
 }
 
 type UserRepository interface {
-	GetById(string) (User, error)
-	GetByEmail(string) (User, error)
-	Create(*User) error
-	Update(*User) error
-	DeleteById(string) error
+	GetAll() ([]User, error)
+	GetOneById(string) (User, error)
+	GetOneByEmail(string) (User, error)
+	CreateOne(*User) error
+	UpdateOneById(string, *User) error
+	DeleteOneById(string) error
 }
