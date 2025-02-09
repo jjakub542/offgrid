@@ -7,13 +7,15 @@ build:
 	@echo "Building..."
 	
 	
-	@go build -o main cmd/api/main.go
+	@go build -o tmp/main cmd/offgrid/main.go
 
 # Run the application
 run:
-	@go run cmd/api/main.go
+	@go run cmd/offgrid/main.go
 
-
+# Database migration
+migrate:
+	@go run cmd/migrations/main.go
 
 # Test the application
 test:
