@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"offgrid/internal/server"
+	server "offgrid/internal/app"
 )
 
 func main() {
