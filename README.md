@@ -45,13 +45,19 @@ make clean
 ## Useful commands:
 
 Connect to psql as postgres:
+```bash
 sudo -u postgres psql
+```
 
 Then:
+```sql
 CREATE DATABASE offgrid_db;
 CREATE USER offgrid_admin WITH PASSWORD '...';
 GRANT ALL PRIVILEGES ON DATABASE offgrid_db TO offgrid_admin;
+```
 
 
 Connect to offgrid_db as offgrid_admin:
+```bash
 psql -h localhost -d offgrid_db -U offgrid_admin -p 5432
+```
