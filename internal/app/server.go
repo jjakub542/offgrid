@@ -27,6 +27,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	e.Use(middleware.Recover())
 
 	e.GET("/", s.UserHomePage)
+	e.GET("/contact", s.UserContactPage)
 	e.GET("/admin", s.AdminHomePage)
 	e.GET("/hello", s.HelloWorldHandler)
 

@@ -10,6 +10,10 @@ func (s *Server) UserHomePage(c echo.Context) error {
 	return c.Render(http.StatusOK, "user/home.html", nil)
 }
 
+func (s *Server) UserContactPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "user/contact.html", nil)
+}
+
 func (s *Server) AdminHomePage(c echo.Context) error {
 	return c.Render(http.StatusOK, "admin/home.html", nil)
 }
