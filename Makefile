@@ -13,9 +13,17 @@ build:
 run:
 	@go run cmd/offgrid/main.go
 
-# Database migration
-migrate:
-	@go run cmd/migrations/main.go
+# Database create tables
+tables:
+	@go run cmd/tables/main.go
+
+# Database drop tables
+drop:
+	@go run cmd/drop/main.go
+
+# Database create superuser
+superuser:
+	@go run cmd/superuser/main.go
 
 # Test the application
 test:

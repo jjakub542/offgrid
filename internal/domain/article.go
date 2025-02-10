@@ -1,5 +1,7 @@
 package domain
 
+import "time"
+
 type Image struct {
 	Id          string
 	Name        string
@@ -12,8 +14,8 @@ type Article struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
 	Content     string `json:"content"`
-	CreatedAt   string
-	UpdatedAt   string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 	Visible     bool
 }
 
