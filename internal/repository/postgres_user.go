@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"offgrid/internal/domain"
 
 	"github.com/jackc/pgx/v5"
@@ -15,7 +16,9 @@ func NewPostgresUser(c *pgx.Conn) domain.UserRepository {
 }
 
 func (p *postgresUserRepository) CreateOne(user *domain.User) error {
-	return nil
+	sql := `INSERT INTO users (email, password_hash, is_superuser) VALUES ($1, $2, $3)`
+	_, err := p.conn.Exec(context.Background(), sql, user.Email, user.PasswordHash, user.IsSuperuser)
+	return err
 }
 
 func (p *postgresUserRepository) UpdateOneById(id string, user *domain.User) error {
