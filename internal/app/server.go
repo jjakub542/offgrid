@@ -9,10 +9,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gorilla/sessions"
 	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -25,7 +23,7 @@ type Server struct {
 
 func (s *Server) Handler() http.Handler {
 	e := echo.New()
-	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret"))))
+	e.Use(SessionMiddleware(NewSessionStore()))
 	e.Renderer = Renderer()
 	e.Static("/static", "web/static")
 	e.Use(middleware.Logger())
