@@ -28,9 +28,7 @@ superuser:
 # Test the application
 test:
 	@echo "Testing..."
-	@go test ./... -v
-
-
+	@go test ./test... -v
 
 # Clean the binary
 clean:
@@ -38,7 +36,6 @@ clean:
 	@rm -f main
 
 # Live Reload
-
 watch:
 	@if command -v air > /dev/null; then \
             air; \
@@ -56,4 +53,4 @@ watch:
         fi
 
 
-.PHONY: all build run test clean watch
+.PHONY: all build run tables drop superuser test clean watch

@@ -52,8 +52,10 @@ sudo -u postgres psql
 Then:
 ```sql
 CREATE DATABASE offgrid_db;
+CREATE DATABASE offgrid_db_test;
 CREATE USER offgrid_admin WITH PASSWORD 'offgrid123';
 GRANT ALL PRIVILEGES ON DATABASE offgrid_db TO offgrid_admin;
+GRANT ALL PRIVILEGES ON DATABASE offgrid_db_test TO offgrid_admin;
 ```
 
 

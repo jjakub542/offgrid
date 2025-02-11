@@ -1,8 +1,6 @@
 package main
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"log"
 	"offgrid/internal/database"
@@ -13,7 +11,7 @@ import (
 )
 
 func main() {
-	db := database.New()
+	db := database.Connect()
 	var err error
 	newUser := domain.User{IsSuperuser: true}
 
@@ -27,10 +25,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	hashed_password := sha256.New()
-	hashed_password.Write([]byte(newUser.Password))
-
-	newUser.PasswordHash = hex.EncodeToString(hashed_password.Sum(nil))
+	newUser.CreatePasswordHash()
 
 	repo := repository.New(db)
 

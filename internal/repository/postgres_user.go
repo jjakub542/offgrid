@@ -4,14 +4,14 @@ import (
 	"context"
 	"offgrid/internal/domain"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type postgresUserRepository struct {
-	db *pgx.Conn
+	db *pgxpool.Pool
 }
 
-func NewUserRepository(c *pgx.Conn) domain.UserRepository {
+func NewUserRepository(c *pgxpool.Pool) domain.UserRepository {
 	return &postgresUserRepository{db: c}
 }
 
@@ -29,12 +29,21 @@ func (p *postgresUserRepository) DeleteOneById(id string) error {
 	return nil
 }
 
-func (p *postgresUserRepository) GetOneByEmail(email string) (domain.User, error) {
-	return domain.User{}, nil
+func (p *postgresUserRepository) GetOneByEmail(email string) (*domain.User, error) {
+	var user domain.User
+	err := p.db.QueryRow(context.Background(), `SELECT * FROM users WHERE email=$1`, email).Scan(
+		&user.Id,
+		&user.Email,
+		&user.PasswordHash,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+		&user.IsSuperuser,
+	)
+	return &user, err
 }
 
-func (p *postgresUserRepository) GetOneById(id string) (domain.User, error) {
-	return domain.User{}, nil
+func (p *postgresUserRepository) GetOneById(id string) (*domain.User, error) {
+	return &domain.User{}, nil
 }
 
 func (p *postgresUserRepository) GetAll() ([]domain.User, error) {

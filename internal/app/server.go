@@ -3,13 +3,14 @@ package app
 import (
 	"fmt"
 	"net/http"
+	"offgrid/internal/app/session"
 	"offgrid/internal/database"
 	"offgrid/internal/repository"
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -17,14 +18,15 @@ import (
 
 type Server struct {
 	port       int
-	db         *pgx.Conn
+	db         *pgxpool.Pool
+	store      *session.Store
 	repository *repository.Repository
 }
 
 func (s *Server) Handler() http.Handler {
 	e := echo.New()
-	e.Use(SessionMiddleware(NewSessionStore()))
-	e.Renderer = Renderer()
+	e.Use(session.Middleware(s.store))
+	e.Renderer = TemplateRenderer()
 	e.Static("/static", "web/static")
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -36,10 +38,12 @@ func (s *Server) Handler() http.Handler {
 
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
-	db := database.New()
+	db := database.Connect()
+	store := session.NewStore()
 	NewServer := &Server{
 		port:       port,
 		db:         db,
+		store:      store,
 		repository: repository.New(db),
 	}
 
