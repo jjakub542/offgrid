@@ -8,16 +8,16 @@ import (
 )
 
 type postgresUserRepository struct {
-	conn *pgx.Conn
+	db *pgx.Conn
 }
 
-func NewPostgresUser(c *pgx.Conn) domain.UserRepository {
-	return &postgresUserRepository{conn: c}
+func NewUserRepository(c *pgx.Conn) domain.UserRepository {
+	return &postgresUserRepository{db: c}
 }
 
 func (p *postgresUserRepository) CreateOne(user *domain.User) error {
 	sql := `INSERT INTO users (email, password_hash, is_superuser) VALUES ($1, $2, $3)`
-	_, err := p.conn.Exec(context.Background(), sql, user.Email, user.PasswordHash, user.IsSuperuser)
+	_, err := p.db.Exec(context.Background(), sql, user.Email, user.PasswordHash, user.IsSuperuser)
 	return err
 }
 

@@ -32,9 +32,9 @@ func main() {
 
 	newUser.PasswordHash = hex.EncodeToString(hashed_password.Sum(nil))
 
-	user := repository.NewPostgresUser(db)
+	repo := repository.New(db)
 
-	err = user.CreateOne(&newUser)
+	err = repo.User.CreateOne(&newUser)
 
 	if err != nil {
 		log.Fatal(err)
