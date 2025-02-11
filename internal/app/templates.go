@@ -28,8 +28,11 @@ func (t *templateRegistry) Render(w io.Writer, name string, data interface{}, c 
 func Renderer() *templateRegistry {
 	templates := make(map[string]*template.Template)
 
-	templates["user/home.html"] = template.Must(template.ParseFiles("web/templates/user/home.html", "web/templates/user/base.html"))
-	templates["user/contact.html"] = template.Must(template.ParseFiles("web/templates/user/contact.html", "web/templates/user/base.html"))
+	templates["home.html"] = template.Must(template.ParseFiles("web/templates/user/home.html", "web/templates/user/base.html"))
+	templates["contact.html"] = template.Must(template.ParseFiles("web/templates/user/contact.html", "web/templates/user/base.html"))
+	templates["about.html"] = template.Must(template.ParseFiles("web/templates/user/about.html", "web/templates/user/base.html"))
+	templates["login.html"] = template.Must(template.ParseFiles("web/templates/user/login.html", "web/templates/user/base.html"))
+	templates["logout.html"] = template.Must(template.ParseFiles("web/templates/user/logout.html", "web/templates/user/base.html"))
 	templates["admin/home.html"] = template.Must(template.ParseFiles("web/templates/admin/home.html", "web/templates/admin/base.html"))
 
 	return &templateRegistry{
