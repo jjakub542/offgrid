@@ -31,7 +31,7 @@ func (s *Server) Handler() http.Handler {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	RegisterRouter(e, s.repository)
+	RegisterRoutes(e, s.repository)
 
 	return e
 }

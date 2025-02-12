@@ -32,7 +32,7 @@ func (p *postgresArticleRepository) GetAll() ([]domain.Article, error) {
 			&article.Content,
 			&article.CreatedAt,
 			&article.UpdatedAt,
-			&article.Visible,
+			&article.Public,
 		); err != nil {
 			return articles, err
 		}
@@ -54,7 +54,7 @@ func (p *postgresArticleRepository) GetOneById(id string) (*domain.Article, erro
 		&article.Content,
 		&article.CreatedAt,
 		&article.UpdatedAt,
-		&article.Visible,
+		&article.Public,
 	)
 	return &article, err
 }
@@ -62,7 +62,7 @@ func (p *postgresArticleRepository) GetOneById(id string) (*domain.Article, erro
 func (p *postgresArticleRepository) CreateOne(a *domain.Article) error {
 	sql := `INSERT INTO articles (title, description, content, public)
 	VALUES ($1, $2, $3, $4)`
-	_, err := p.db.Exec(context.Background(), sql, a.Title, a.Description, a.Content, a.Visible)
+	_, err := p.db.Exec(context.Background(), sql, a.Title, a.Description, a.Content, a.Public)
 	return err
 }
 
@@ -70,7 +70,7 @@ func (p *postgresArticleRepository) UpdateOneById(a *domain.Article, id string) 
 	sql := `UPDATE articles SET
 	title=$1, description=$2, content=$3, updated_at=$4, public=$5
 	WHERE id=$6`
-	_, err := p.db.Exec(context.Background(), sql, a.Title, a.Description, a.Content, time.Now(), a.Visible, id)
+	_, err := p.db.Exec(context.Background(), sql, a.Title, a.Description, a.Content, time.Now(), a.Public, id)
 	return err
 }
 

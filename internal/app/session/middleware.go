@@ -42,3 +42,17 @@ func Middleware(store *Store) echo.MiddlewareFunc {
 func generateSessionID() string {
 	return uuid.NewString()
 }
+
+func AdminAuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		sessionID := c.Get("sessionID").(string)
+		store := c.Get("sessionStore").(*Store)
+
+		role, ok := store.Get(sessionID, "role")
+		if !ok || role != "admin" {
+			return next(c)
+			//return c.JSON(http.StatusForbidden, map[string]string{"error": "Access forbidden: Admin only"})
+		}
+		return next(c)
+	}
+}

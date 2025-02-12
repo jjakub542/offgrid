@@ -16,7 +16,7 @@ type Article struct {
 	Content     string `json:"content"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	Visible     bool
+	Public      bool
 }
 
 func (i *Image) GetPath() string {

@@ -17,6 +17,10 @@ run:
 tables:
 	@go run cmd/tables/main.go
 
+# Database create articles
+articles:
+	@go run cmd/articles/main.go
+
 # Database drop tables
 drop:
 	@go run cmd/drop/main.go
@@ -52,5 +56,4 @@ watch:
             fi; \
         fi
 
-
-.PHONY: all build run tables drop superuser test clean watch
+.PHONY: all build run tables articles drop superuser test clean watch

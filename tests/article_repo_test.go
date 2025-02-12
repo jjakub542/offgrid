@@ -13,7 +13,7 @@ func TestArticleCreateOne(t *testing.T) {
 		Title:       "tytuł artykułu",
 		Description: "streszczenie/opis",
 		Content:     "Writing a custom session middleware in Go Echo involves intercepting requests to handle session creation, validation, and management. Below is a complete guide to creating a basic custom session middleware.",
-		Visible:     true,
+		Public:      true,
 	}
 
 	repo := repository.New(TestDB)
@@ -36,7 +36,7 @@ func TestArticleGetAll(t *testing.T) {
 		Title:       "tytuł artykułu po aktualizacji",
 		Description: "streszczenie/opis",
 		Content:     "Writing a custom session middleware in Go Echo involves intercepting requests to handle session creation, validation, and management. Below is a complete guide to creating a basic custom session middleware.",
-		Visible:     true,
+		Public:      true,
 	}
 	err = repo.Article.UpdateOneById(article2, articles[0].Id)
 	if err != nil {

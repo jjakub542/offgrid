@@ -18,6 +18,18 @@ func (h *AdminHandler) HomePage(c echo.Context) error {
 	return c.Render(http.StatusOK, "admin/home.html", nil)
 }
 
+func (h *AdminHandler) ArticlesPage(c echo.Context) error {
+	articles, err := h.Repo.Article.GetAll()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal server error")
+	}
+	return c.Render(http.StatusOK, "admin/articles.html", articles)
+}
+
+func (h *AdminHandler) ArticleEditPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "admin/article.html", nil)
+}
+
 func (h *AdminHandler) LoginPage(c echo.Context) error {
 	sessionID := c.Get("sessionID").(string)
 	store := c.Get("sessionStore").(*session.Store)
