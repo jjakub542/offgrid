@@ -24,9 +24,9 @@ func (i *Image) GetPath() string {
 }
 
 type ArticleRepository interface {
-	GetById(string) (Article, error)
-	GetByEmail(string) (Article, error)
-	Create(*Article) error
-	Update(*Article) error
-	DeleteById(string) error
+	GetAll() ([]Article, error)
+	GetOneById(string) (*Article, error)
+	CreateOne(*Article) error
+	UpdateOneById(*Article, string) error
+	DeleteOneById(string) error
 }

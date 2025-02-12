@@ -1,13 +1,13 @@
 package tests
 
 import (
+	"offgrid/internal/database"
 	"offgrid/internal/domain"
 	"offgrid/internal/repository"
 	"testing"
 )
 
-func TestUserGetOneByEmail(t *testing.T) {
-	setupTest(t)
+func TestUserRepository(t *testing.T) {
 	var err error
 
 	user := &domain.User{
@@ -33,4 +33,6 @@ func TestUserGetOneByEmail(t *testing.T) {
 	if user2.PasswordHash != user.PasswordHash {
 		t.Fail()
 	}
+
+	database.DropTables(TestDB)
 }

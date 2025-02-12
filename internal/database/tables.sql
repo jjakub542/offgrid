@@ -16,8 +16,6 @@
 		content TEXT,
 		created_at TIMESTAMP DEFAULT now(),
 		updated_at TIMESTAMP DEFAULT now(),
-		public BOOLEAN,
-		author_id UUID NOT NULL,
-		FOREIGN KEY (author_id) REFERENCES users(id)
+		public BOOLEAN
 	);
     

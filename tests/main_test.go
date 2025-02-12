@@ -20,17 +20,11 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	database.InitTables(TestDB, "../internal/database/tables.sql")
 
 	// Run tests
 	code := m.Run()
-
+	database.DropTables(TestDB)
 	TestDB.Close()
 	os.Exit(code)
-}
-
-func setupTest(t *testing.T) {
-	database.InitTables(TestDB, "../internal/database/tables.sql")
-	t.Cleanup(func() {
-		database.DropTables(TestDB)
-	})
 }
