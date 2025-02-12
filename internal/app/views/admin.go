@@ -27,7 +27,11 @@ func (h *AdminHandler) ArticlesPage(c echo.Context) error {
 }
 
 func (h *AdminHandler) ArticleEditPage(c echo.Context) error {
-	return c.Render(http.StatusOK, "admin/article.html", nil)
+	article, err := h.Repo.Article.GetOneById(c.Param("article_id"))
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal server error")
+	}
+	return c.Render(http.StatusOK, "admin/article.html", article)
 }
 
 func (h *AdminHandler) LoginPage(c echo.Context) error {
