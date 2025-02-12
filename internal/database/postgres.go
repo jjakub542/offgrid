@@ -29,20 +29,21 @@ func Connect() *pgxpool.Pool {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	err = db.Ping(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
 	return db
 }
 
 func InitTables(db *pgxpool.Pool, path string) error {
 	content, err := os.ReadFile(path)
-
 	if err != nil {
 		log.Fatalf("Error reading file: %v", err)
 	}
 
 	sql := string(content)
 	_, err = db.Exec(context.Background(), sql)
-
 	return err
 }
 

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"offgrid/internal/database"
 
 	_ "github.com/joho/godotenv/autoload"
@@ -8,5 +9,8 @@ import (
 
 func main() {
 	db := database.Connect()
-	database.InitTables(db, "internal/database/tables.sql")
+	err := database.InitTables(db, "internal/database/tables.sql")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
