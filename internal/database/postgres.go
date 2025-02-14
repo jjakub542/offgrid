@@ -58,5 +58,9 @@ func DropTables(db *pgxpool.Pool) error {
 	DROP TABLE users;
 	`)
 
+	_, err = db.Exec(context.Background(), `
+	DROP TABLE images;
+	`)
+
 	return err
 }

@@ -25,6 +25,8 @@ tmp/
 # .env file
 # .env
 
+web/static/uploads/*
+
 # Project build
 main
 *templ.go

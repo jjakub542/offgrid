@@ -10,20 +10,21 @@ import (
 
 func RegisterRoutes(e *echo.Echo, repo *repository.Repository) {
 	user := views.UserHandler{Repo: repo}
+	admin := views.AdminHandler{Repo: repo}
+
 	userGroup := e.Group("")
 	userGroup.GET("", user.HomePage)
 	userGroup.GET("/about", user.AboutPage)
 	userGroup.GET("/contact", user.ContactPage)
 
-	api := views.ApiHandler{Repo: repo}
-	apiGroup := e.Group("/api")
-	apiGroup.GET("/hello", api.HelloWorldHandler)
-
-	admin := views.AdminHandler{Repo: repo}
 	adminGroup := e.Group("/admin")
 	adminGroup.GET("", session.AdminAuthMiddleware(admin.HomePage))
 	adminGroup.GET("/articles", session.AdminAuthMiddleware(admin.ArticlesPage))
-	adminGroup.GET("/articles/:article_id", session.AdminAuthMiddleware(admin.ArticleEditPage))
+	adminGroup.POST("/articles/create", session.AdminAuthMiddleware(admin.ArticleCreate))
+	adminGroup.POST("/articles/delete/:article_id", session.AdminAuthMiddleware(admin.ArticleDelete))
+	adminGroup.POST("/articles/update/:article_id", session.AdminAuthMiddleware(admin.ArticleUpdate))
+	adminGroup.POST("/articles/attach-image/:article_id", session.AdminAuthMiddleware(admin.ArticleAttachImage))
+	adminGroup.GET("/articles/edit/:article_id", session.AdminAuthMiddleware(admin.ArticleEditPage))
 	adminGroup.Any("/login", admin.LoginPage)
-	adminGroup.GET("/logout", admin.LogoutPage)
+	adminGroup.Any("/logout", admin.LogoutPage)
 }

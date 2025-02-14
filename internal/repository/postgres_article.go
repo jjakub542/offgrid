@@ -18,7 +18,7 @@ func NewArticleRepository(c *pgxpool.Pool) domain.ArticleRepository {
 
 func (p *postgresArticleRepository) GetAll() ([]domain.Article, error) {
 	var articles []domain.Article
-	sql := `SELECT * FROM articles;`
+	sql := `SELECT * FROM articles ORDER BY created_at DESC;`
 	rows, err := p.db.Query(context.Background(), sql)
 	if err != nil {
 		return articles, err
@@ -78,4 +78,35 @@ func (p *postgresArticleRepository) DeleteOneById(id string) error {
 	sql := `DELETE FROM articles WHERE id=$1`
 	_, err := p.db.Exec(context.Background(), sql, id)
 	return err
+}
+
+func (p *postgresArticleRepository) AttachImage(image *domain.Image, article_id string) error {
+	sql := `INSERT INTO images (filename, article_id) VALUES ($1, $2)`
+	_, err := p.db.Exec(context.Background(), sql, image.Filename, article_id)
+	return err
+}
+
+func (p *postgresArticleRepository) GetArticleImages(article_id string) ([]domain.Image, error) {
+	var images []domain.Image
+	sql := `SELECT * FROM images WHERE article_id=$1`
+	rows, err := p.db.Query(context.Background(), sql, article_id)
+	if err != nil {
+		return images, err
+	}
+	for rows.Next() {
+		var image domain.Image
+		if err := rows.Scan(
+			&image.Id,
+			&image.Filename,
+			&image.UploadedAt,
+			&image.ArticleId,
+		); err != nil {
+			return images, err
+		}
+		images = append(images, image)
+	}
+	if err = rows.Err(); err != nil {
+		return images, err
+	}
+	return images, nil
 }
