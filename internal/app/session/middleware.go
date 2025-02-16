@@ -50,8 +50,7 @@ func AdminAuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 
 		role, ok := store.Get(sessionID, "role")
 		if !ok || role != "admin" {
-			return next(c)
-			//return c.JSON(http.StatusForbidden, map[string]string{"error": "Access forbidden: Admin only"})
+			return c.JSON(http.StatusForbidden, map[string]string{"error": "Access forbidden: Admin only"})
 		}
 		return next(c)
 	}
