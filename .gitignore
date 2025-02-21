@@ -23,7 +23,8 @@ tmp/
 .idea
 
 # .env file
-# .env
+.env
+article-example.md
 
 web/static/uploads/*
 
